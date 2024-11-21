@@ -159,6 +159,8 @@ user@host:~$ mvn package
 user@host:~$ java -jar DiceRoller-1.0-SNAPSHOT.jar
 ```
 
+To exit the program type **q** or use the **Ctrl+C**.
+
 ## References
 The really useful book [Writing an Interpreter in Go](https://interpreterbook.com/) written by Thorsten Ball.
 
