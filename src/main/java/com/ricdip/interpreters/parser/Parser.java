@@ -93,7 +93,7 @@ public class Parser {
             return root;
         } else {
             // tokens left after parsing: some error occurred
-            errors.add(String.format("EOF expected, got '%s' (%s)", currToken.getLexeme(), currToken.getTokenType()));
+            errors.add(String.format("EOF expected, got '%s' (%s token)", currToken.getLexeme(), currToken.getTokenType()));
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class Parser {
         Supplier<Expression> prefixFn = prefixParseFunctions.get(currToken.getTokenType());
 
         if (prefixFn == null) {
-            noPrefixParseFnError(currToken.getTokenType());
+            noPrefixParseFunctionError(currToken.getTokenType());
             return null;
         }
 
@@ -245,8 +245,8 @@ public class Parser {
         );
     }
 
-    private void noPrefixParseFnError(TokenType tokenType) {
-        errors.add(String.format("no prefix parse function found for '%s'", tokenType.name()));
+    private void noPrefixParseFunctionError(TokenType tokenType) {
+        errors.add(String.format("no prefix parse function found for token '%s'", tokenType.name()));
     }
 
     private Precedence getOperatorPrecedence(TokenType tokenType) {

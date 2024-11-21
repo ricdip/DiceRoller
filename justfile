@@ -15,4 +15,4 @@ clean:
 package:
     mvn package
     mkdir -p bin
-    cp target/dnd-dice-roller-*.jar bin
+    cp target/DiceRoller-*.jar bin
