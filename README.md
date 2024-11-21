@@ -110,6 +110,7 @@ This project uses a cryptographically strong random number generator to roll dic
 The implementation used for the RNG is [SecureRandom](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/SecureRandom.html).
 
 ## Help message
+
 ```
 Usage: <jar file name> [-hV] [-ml | -mp | -me]
 A D&D dice roller written in Java
@@ -119,6 +120,28 @@ A D&D dice roller written in Java
       -ml, --mode-lexer    Enable lexer mode
       -mp, --mode-parser   Enable parser mode
   -V, --version            Print version information and exit.
+```
+
+## Execution modes
+
+- **Lexer mode**: enable only the Lexer module. It converts a sequence of characters into a sequence of lexical tokens
+(Lexical Analysis). A lexical token or token is a string with an assigned and thus identified meaning.
+
+- **Parser mode**: enable only the Lexer and the Parser modules. Uses the stream of tokens to check the syntactic
+structure of the input and generate the Abstract Syntax Tree (Syntax Analysis). The implemented parser is a
+Recursive Descent Parser that uses the Pratt Parsing technique to handle operator precedence.
+
+- **Evaluator mode**: enable Lexer, Parser and Evaluator modules. Interprets the AST (Abstract Syntax
+Tree) on the fly (without compiling it) and produces the result of the input expression.
+
+## Modules and interactions
+
+```mermaid
+flowchart LR;
+  Input([input]) --> Lexer;
+  Lexer -- tokens --> Parser;
+  Parser -- AST --> Evaluator;
+  Evaluator --> Output([result]);
 ```
 
 ## Build JAR using just command
