@@ -5,6 +5,10 @@ import com.ricdip.interpreters.token.TokenType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Class that identifies a prefix expression (an expression that has a prefix operator: minus).
+ * Example: -2
+ */
 @RequiredArgsConstructor
 @Getter
 public class PrefixExpression implements Expression {

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Class that identifies the root node of the AST.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

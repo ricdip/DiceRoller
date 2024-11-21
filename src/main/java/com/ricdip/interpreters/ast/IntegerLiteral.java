@@ -4,6 +4,10 @@ import com.ricdip.interpreters.token.TokenType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Class that identifies an integer literal.
+ * Example: 5
+ */
 @RequiredArgsConstructor
 @Getter
 public class IntegerLiteral implements Expression {

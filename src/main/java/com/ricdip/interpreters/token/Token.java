@@ -3,6 +3,9 @@ package com.ricdip.interpreters.token;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Class that identifies a single token.
+ */
 @RequiredArgsConstructor
 @Getter
 public class Token {

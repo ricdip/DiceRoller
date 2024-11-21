@@ -15,8 +15,16 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * Class that performs the parsing of the input, converting a stream of tokens into an AST
+ * (Abstract Syntax Tree).
+ * It is a recursive descent parser that uses the Pratt Parsing technique to handle operator precedence.
+ */
 public class Parser {
     private final Lexer lexer;
+    /**
+     * Contains a list of errors occurred while parsing.
+     */
     @Getter
     private final List<String> errors = new ArrayList<>();
     private final Map<TokenType, Supplier<Expression>> prefixParseFunctions = new HashMap<>();
@@ -25,14 +33,19 @@ public class Parser {
     private Token currToken;
     private Token peekToken;
 
+    /**
+     * Constructs a {@link Parser} instance used to parse the input string.
+     *
+     * @param lexer The {@link Lexer} instance that contains the loaded input string to parse.
+     */
     public Parser(Lexer lexer) {
         this.lexer = lexer;
         nextToken();
         nextToken();
 
         // associate a token type to specific function that parses prefix expressions
-        prefixParseFunctions.put(TokenType.INT, this::parseIntegerLiteral); // treat integer literals as prefix expression
-        prefixParseFunctions.put(TokenType.DICE, this::parseDiceLiteral); // treat dice literals as prefix expression
+        prefixParseFunctions.put(TokenType.INT, this::parseIntegerLiteral); // treat integer literals (terminal symbol) as prefix expression
+        prefixParseFunctions.put(TokenType.DICE, this::parseDiceLiteral); // treat dice literals (terminal symbol) as prefix expression
         prefixParseFunctions.put(TokenType.MINUS, this::parsePrefixExpression); // -rightExpression
         prefixParseFunctions.put(TokenType.LPAREN, this::parseGroupedExpression); // (expression)
 
@@ -41,14 +54,14 @@ public class Parser {
         infixParseFunctions.put(TokenType.MINUS, this::parseInfixExpression); // left - right
         infixParseFunctions.put(TokenType.ASTERISK, this::parseInfixExpression); // left * right
         infixParseFunctions.put(TokenType.SLASH, this::parseInfixExpression); // left / right
-        infixParseFunctions.put(TokenType.LSQUARE, this::parseRollExpression); // left[right] (left is a dice, right is an expression to sum to every dice roll)
+        infixParseFunctions.put(TokenType.LSQUARE, this::parseRollExpression); // left[right] (left is a dice, right is an expression to sum to each dice roll)
 
         // associate a specific operator to a precedence (higher number = higher precedence)
         operatorPrecedences.put(Operator.PLUS, Precedence.SUM);
         operatorPrecedences.put(Operator.MINUS, Precedence.SUM);
         operatorPrecedences.put(Operator.ASTERISK, Precedence.PRODUCT);
         operatorPrecedences.put(Operator.SLASH, Precedence.PRODUCT);
-        operatorPrecedences.put(Operator.LSQUARE, Precedence.ROLL);
+        operatorPrecedences.put(Operator.LSQUARE, Precedence.SEPARATED_DICE_ROLL);
     }
 
     private boolean hasNextToken() {
@@ -62,6 +75,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the input stream and returns a {@link RootASTNode} that identifies the root node of the AST that can be
+     * traversed by an {@link com.ricdip.interpreters.evaluator.Evaluator} instance.
+     *
+     * @return A {@link RootASTNode} that contains the AST or {@code null} if some error occurs.
+     */
     public RootASTNode parse() {
         // create an empty root node
         RootASTNode root = new RootASTNode();

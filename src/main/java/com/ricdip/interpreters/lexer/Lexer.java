@@ -8,12 +8,21 @@ import lombok.NonNull;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Class that perform lexical analysis on the input, converting a stream of text into a stream of
+ * tokens.
+ */
 public class Lexer implements Iterator<Token> {
     private final String input;
     private Integer currPosition;
     private Integer peekPosition;
     private Character currChar;
 
+    /**
+     * Constructs a {@link Lexer} instance used to perform lexical analysis on the input string.
+     *
+     * @param input The input string that contains the characters to tokenize.
+     */
     public Lexer(@NonNull String input) {
         this.input = input.strip();
         currPosition = null;
@@ -39,11 +48,22 @@ public class Lexer implements Iterator<Token> {
         }
     }
 
+    /**
+     * Check if there are characters left to tokenize from the input.
+     *
+     * @return True if there are characters to tokenize, False otherwise.
+     */
     @Override
     public boolean hasNext() {
         return Symbol.EOF != peekChar();
     }
 
+    /**
+     * Returns the next {@link Token} converted from the input stream.
+     *
+     * @return The next token converted from the input stream.
+     * @throws NoSuchElementException If this method is called after the last token has been returned.
+     */
     @Override
     public Token next() {
         if (hasNext()) {

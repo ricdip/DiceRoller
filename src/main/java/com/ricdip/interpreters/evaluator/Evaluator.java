@@ -11,12 +11,21 @@ import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class that traverses the AST returning the result of the evaluation.
+ */
 @RequiredArgsConstructor
 public class Evaluator {
     private final DiceRoller diceRoller;
     @Getter
     private final List<String> prints = new ArrayList<>();
 
+    /**
+     * Evaluates an {@link ASTNode} object and returns its evaluation.
+     *
+     * @param node a {@link ASTNode} object that is a parsed node of the AST.
+     * @return the evaluation of the parsed node.
+     */
     public EvaluatedObject evaluate(ASTNode node) {
         if (node instanceof RootASTNode rootNode) {
 
@@ -44,7 +53,7 @@ public class Evaluator {
         } else if (node instanceof RollExpression rollExpression) {
             EvaluatedObject expression = evaluate(rollExpression.getExpression());
 
-            return evaluateRollExpression(
+            return evaluateSeparatedDiceRollExpression(
                     rollExpression.getDice().getNumberOfDices(),
                     rollExpression.getDice().getDiceType(),
                     expression
@@ -62,15 +71,15 @@ public class Evaluator {
 
             return evaluateInfixExpressionIntegerInteger(operator, left, right);
 
-        } else if (ObjectType.DICE.equals(left.type()) && ObjectType.INT.equals(right.type())) {
+        } else if (ObjectType.DICE_ROLL.equals(left.type()) && ObjectType.INT.equals(right.type())) {
 
             return evaluateInfixExpressionIntegerDice(operator, left, right);
 
-        } else if (ObjectType.INT.equals(left.type()) && ObjectType.DICE.equals(right.type())) {
+        } else if (ObjectType.INT.equals(left.type()) && ObjectType.DICE_ROLL.equals(right.type())) {
 
             return evaluateInfixExpressionIntegerDice(operator, left, right);
 
-        } else if (ObjectType.DICE.equals(left.type()) && ObjectType.DICE.equals(right.type())) {
+        } else if (ObjectType.DICE_ROLL.equals(left.type()) && ObjectType.DICE_ROLL.equals(right.type())) {
 
             return evaluateInfixExpressionDiceDice(operator, left, right);
 
@@ -95,16 +104,16 @@ public class Evaluator {
 
         if (ObjectType.INT.equals(left.type())) {
             leftDiceResult = (IntegerObject) left;
-        } else if (ObjectType.DICE.equals(left.type())) {
-            leftDiceResult = new IntegerObject(((DiceObject) left).getResult());
+        } else if (ObjectType.DICE_ROLL.equals(left.type())) {
+            leftDiceResult = new IntegerObject(((DiceRollObject) left).getResult());
         } else {
             return new ErrorObject("unexpected type for left operand of infix expression: '%s'", left.type());
         }
 
         if (ObjectType.INT.equals(right.type())) {
             rightDiceResult = (IntegerObject) right;
-        } else if (ObjectType.DICE.equals(right.type())) {
-            rightDiceResult = new IntegerObject(((DiceObject) right).getResult());
+        } else if (ObjectType.DICE_ROLL.equals(right.type())) {
+            rightDiceResult = new IntegerObject(((DiceRollObject) right).getResult());
         } else {
             return new ErrorObject("unexpected type for right operand of infix expression: '%s'", right.type());
         }
@@ -113,8 +122,8 @@ public class Evaluator {
     }
 
     private EvaluatedObject evaluateInfixExpressionDiceDice(Operator operator, EvaluatedObject left, EvaluatedObject right) {
-        Integer leftDiceResult = ((DiceObject) left).getResult();
-        Integer rightDiceResult = ((DiceObject) right).getResult();
+        Integer leftDiceResult = ((DiceRollObject) left).getResult();
+        Integer rightDiceResult = ((DiceRollObject) right).getResult();
 
         return evaluateInfixExpressionIntegerInteger(operator, new IntegerObject(leftDiceResult), new IntegerObject(rightDiceResult));
     }
@@ -169,26 +178,26 @@ public class Evaluator {
 
         result = results.stream().reduce(result, (partialResult, currentValue) -> partialResult + currentValue);
 
-        DiceObject diceObject = new DiceObject(
+        DiceRollObject diceRollObject = new DiceRollObject(
                 numberOfDices,
                 diceType,
                 results,
                 result
         );
 
-        prints.add(diceObject.toDetailsString());
+        prints.add(diceRollObject.toDetailsString());
 
-        return diceObject;
+        return diceRollObject;
     }
 
-    private EvaluatedObject evaluateRollExpression(Integer numberOfDices, DiceType diceType, EvaluatedObject expression) {
+    private EvaluatedObject evaluateSeparatedDiceRollExpression(Integer numberOfDices, DiceType diceType, EvaluatedObject expression) {
         Integer expressionValue = null;
         if (ObjectType.INT.equals(expression.type())) {
             expressionValue = ((IntegerObject) expression).getValue();
         } else if (ObjectType.ERROR.equals(expression.type())) {
             return expression;
         } else {
-            return new ErrorObject("unexpected type inside roll expression: '%s'", expression.type());
+            return new ErrorObject("unexpected type inside dice roll expression: '%s'", expression.type());
         }
 
         List<Integer> diceResults = new ArrayList<>();
@@ -202,7 +211,7 @@ public class Evaluator {
             results.add(randomResult + expressionValue);
         }
 
-        DiceRollObject diceRollObject = new DiceRollObject(
+        SeparatedDiceRollObject separatedDiceRollObject = new SeparatedDiceRollObject(
                 numberOfDices,
                 diceType,
                 diceResults,
@@ -210,8 +219,8 @@ public class Evaluator {
                 results
         );
 
-        prints.add(diceRollObject.toDetailsString());
+        prints.add(separatedDiceRollObject.toDetailsString());
 
-        return diceRollObject;
+        return separatedDiceRollObject;
     }
 }

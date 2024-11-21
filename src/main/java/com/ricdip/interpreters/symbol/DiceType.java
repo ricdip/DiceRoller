@@ -2,6 +2,9 @@ package com.ricdip.interpreters.symbol;
 
 import lombok.Getter;
 
+/**
+ * Enum that contains all possible D&D dices.
+ */
 @Getter
 public enum DiceType {
     D4("d4", 4),

@@ -5,6 +5,10 @@ import com.ricdip.interpreters.token.TokenType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Class that identifies a single dice literal.
+ * Example: 2d20
+ */
 @RequiredArgsConstructor
 @Getter
 public class DiceLiteral implements Expression {

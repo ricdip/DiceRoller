@@ -5,6 +5,11 @@ import com.ricdip.interpreters.token.TokenType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Class that identifies an infix expression (an expression that has an infix operator: addition, subtraction,
+ * multiplication, division).
+ * Example: 2+3
+ */
 @RequiredArgsConstructor
 @Getter
 public class InfixExpression implements Expression {

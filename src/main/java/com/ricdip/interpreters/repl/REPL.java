@@ -14,10 +14,20 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+/**
+ * Class that performs REPL (Read-Evaluate-Print-Loop).
+ */
 @RequiredArgsConstructor
 public class REPL {
     private final DiceRoller diceRoller;
 
+    /**
+     * Method that starts reading input text from {@link InputStream} argument and prints the
+     * evaluated parsed nodes using the {@link PrintWriter} argument.
+     *
+     * @param in  The {@link InputStream} used to read input.
+     * @param out The {@link PrintWriter} used to print the output tokens.
+     */
     public void start(InputStream in, PrintWriter out) {
         Scanner scanner = new Scanner(in);
 

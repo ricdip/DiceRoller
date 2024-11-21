@@ -4,6 +4,9 @@ import com.ricdip.interpreters.symbol.Symbol;
 import com.ricdip.interpreters.token.TokenType;
 import lombok.Getter;
 
+/**
+ * Enum that contains all possible parsable operators.
+ */
 @Getter
 public enum Operator {
     PLUS(Symbol.PLUS),
@@ -18,6 +21,12 @@ public enum Operator {
         this.value = value;
     }
 
+    /**
+     * Returns the correct {@link Operator} associated with a {@link TokenType} object.
+     *
+     * @param tokenType The {@link TokenType} object to be used.
+     * @return The correct {@link Operator} associated with a {@link TokenType} object.
+     */
     public static Operator fromTokenType(TokenType tokenType) {
         return switch (tokenType) {
             case PLUS -> Operator.PLUS;

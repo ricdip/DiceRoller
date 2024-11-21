@@ -2,6 +2,9 @@ package com.ricdip.interpreters.object;
 
 import lombok.Getter;
 
+/**
+ * Class that contains an error occurred while evaluating.
+ */
 @Getter
 public class ErrorObject implements EvaluatedObject {
     private final String message;

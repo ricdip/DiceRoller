@@ -3,6 +3,9 @@ package com.ricdip.interpreters.object;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Class that contains an evaluated integer.
+ */
 @AllArgsConstructor
 @Getter
 public class IntegerObject implements EvaluatedObject {
