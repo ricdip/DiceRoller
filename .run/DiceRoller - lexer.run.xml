@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="DiceRoller - lexer" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="com.ricdip.interpreters.Main" />
+    <option name="MAIN_CLASS_NAME" value="com.ricdip.interpreters.diceroller.Main" />
     <module name="DiceRoller" />
     <option name="PROGRAM_PARAMETERS" value="-ml" />
     <extension name="coverage">

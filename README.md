@@ -156,7 +156,7 @@ user@host:~$ mvn package
 
 ## Run JAR file
 ```bash
-user@host:~$ java -jar DiceRoller-1.0.0.jar
+user@host:~$ java -jar DiceRoller-1.0.1.jar
 ```
 
 To exit the program type **q** or use the **Ctrl+C**.
