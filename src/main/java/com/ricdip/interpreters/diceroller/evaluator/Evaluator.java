@@ -1,8 +1,9 @@
 package com.ricdip.interpreters.diceroller.evaluator;
 
-import com.ricdip.interpreters.diceroller.ast.*;
-import com.ricdip.interpreters.diceroller.object.*;
+import com.ricdip.interpreters.diceroller.evaluator.object.*;
 import com.ricdip.interpreters.diceroller.parser.Operator;
+import com.ricdip.interpreters.diceroller.parser.ast.Node;
+import com.ricdip.interpreters.diceroller.parser.ast.impl.*;
 import com.ricdip.interpreters.diceroller.random.DiceRoller;
 import com.ricdip.interpreters.diceroller.symbol.DiceType;
 import lombok.Getter;
@@ -21,15 +22,15 @@ public class Evaluator {
     private final List<String> prints = new ArrayList<>();
 
     /**
-     * Evaluates an {@link ASTNode} object and returns its evaluation.
+     * Evaluates an {@link Node} object and returns its evaluation.
      *
-     * @param node a {@link ASTNode} object that is a parsed node of the AST.
+     * @param node a {@link Node} object that is a parsed node of the AST.
      * @return the evaluation of the parsed node.
      */
-    public EvaluatedObject evaluate(ASTNode node) {
-        if (node instanceof RootASTNode rootNode) {
+    public EvaluatedObject evaluate(Node node) {
+        if (node instanceof Result result) {
 
-            return evaluate(rootNode.getExpression());
+            return evaluate(result.getExpression());
 
         } else if (node instanceof PrefixExpression prefixExpression) {
             EvaluatedObject right = evaluate(prefixExpression.getRight());
@@ -67,29 +68,29 @@ public class Evaluator {
     }
 
     private EvaluatedObject evaluateInfixExpression(Operator operator, EvaluatedObject left, EvaluatedObject right) {
-        if (ObjectType.INT.equals(left.type()) && ObjectType.INT.equals(right.type())) {
+        if ((left instanceof IntegerObject) && (right instanceof IntegerObject)) {
 
             return evaluateInfixExpressionIntegerInteger(operator, left, right);
 
-        } else if (ObjectType.DICE_ROLL.equals(left.type()) && ObjectType.INT.equals(right.type())) {
+        } else if ((left instanceof DiceRollObject) && (right instanceof IntegerObject)) {
 
             return evaluateInfixExpressionIntegerDice(operator, left, right);
 
-        } else if (ObjectType.INT.equals(left.type()) && ObjectType.DICE_ROLL.equals(right.type())) {
+        } else if ((left instanceof IntegerObject) && (right instanceof DiceRollObject)) {
 
             return evaluateInfixExpressionIntegerDice(operator, left, right);
 
-        } else if (ObjectType.DICE_ROLL.equals(left.type()) && ObjectType.DICE_ROLL.equals(right.type())) {
+        } else if ((left instanceof DiceRollObject) && (right instanceof DiceRollObject)) {
 
             return evaluateInfixExpressionDiceDice(operator, left, right);
 
-        } else if (ObjectType.ERROR.equals(left.type())) {
+        } else if (left instanceof ErrorObject leftErrorObject) {
 
-            return left;
+            return leftErrorObject;
 
-        } else if (ObjectType.ERROR.equals(right.type())) {
+        } else if (right instanceof ErrorObject rightErrorObject) {
 
-            return right;
+            return rightErrorObject;
 
         } else {
 
@@ -102,18 +103,18 @@ public class Evaluator {
         IntegerObject leftDiceResult = null;
         IntegerObject rightDiceResult = null;
 
-        if (ObjectType.INT.equals(left.type())) {
-            leftDiceResult = (IntegerObject) left;
-        } else if (ObjectType.DICE_ROLL.equals(left.type())) {
-            leftDiceResult = new IntegerObject(((DiceRollObject) left).getResult());
+        if (left instanceof IntegerObject leftIntegerObject) {
+            leftDiceResult = leftIntegerObject;
+        } else if (left instanceof DiceRollObject leftDiceRollObject) {
+            leftDiceResult = new IntegerObject(leftDiceRollObject.getResult());
         } else {
             return new ErrorObject("unexpected type for left operand of infix expression: '%s'", left.type());
         }
 
-        if (ObjectType.INT.equals(right.type())) {
-            rightDiceResult = (IntegerObject) right;
-        } else if (ObjectType.DICE_ROLL.equals(right.type())) {
-            rightDiceResult = new IntegerObject(((DiceRollObject) right).getResult());
+        if (right instanceof IntegerObject rightIntegerObject) {
+            rightDiceResult = rightIntegerObject;
+        } else if (right instanceof DiceRollObject rightDiceRollObject) {
+            rightDiceResult = new IntegerObject(rightDiceRollObject.getResult());
         } else {
             return new ErrorObject("unexpected type for right operand of infix expression: '%s'", right.type());
         }
@@ -151,14 +152,12 @@ public class Evaluator {
     }
 
     private EvaluatedObject evaluatePrefixExpressionMinus(EvaluatedObject right) {
-        if (ObjectType.INT.equals(right.type())) {
-            IntegerObject integerObject = (IntegerObject) right;
+        if (right instanceof IntegerObject rightIntegerObject) {
+            return new IntegerObject(-rightIntegerObject.getValue());
 
-            return new IntegerObject(-integerObject.getValue());
+        } else if (right instanceof ErrorObject errorObject) {
 
-        } else if (ObjectType.ERROR.equals(right.type())) {
-
-            return right;
+            return errorObject;
 
         } else {
 
@@ -192,10 +191,10 @@ public class Evaluator {
 
     private EvaluatedObject evaluateSeparatedDiceRollExpression(Integer numberOfDices, DiceType diceType, EvaluatedObject expression) {
         Integer expressionValue = null;
-        if (ObjectType.INT.equals(expression.type())) {
-            expressionValue = ((IntegerObject) expression).getValue();
-        } else if (ObjectType.ERROR.equals(expression.type())) {
-            return expression;
+        if (expression instanceof IntegerObject integerObject) {
+            expressionValue = integerObject.getValue();
+        } else if (expression instanceof ErrorObject errorObject) {
+            return errorObject;
         } else {
             return new ErrorObject("unexpected type inside dice roll expression: '%s'", expression.type());
         }

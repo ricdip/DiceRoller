@@ -1,4 +1,4 @@
-package com.ricdip.interpreters.diceroller.object;
+package com.ricdip.interpreters.diceroller.evaluator.object;
 
 /**
  * Interface implemented by each evaluated object.

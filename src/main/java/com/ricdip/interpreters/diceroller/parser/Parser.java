@@ -1,8 +1,9 @@
 package com.ricdip.interpreters.diceroller.parser;
 
-import com.ricdip.interpreters.diceroller.ast.*;
 import com.ricdip.interpreters.diceroller.evaluator.Evaluator;
 import com.ricdip.interpreters.diceroller.lexer.Lexer;
+import com.ricdip.interpreters.diceroller.parser.ast.Expression;
+import com.ricdip.interpreters.diceroller.parser.ast.impl.*;
 import com.ricdip.interpreters.diceroller.symbol.DiceType;
 import com.ricdip.interpreters.diceroller.symbol.Symbol;
 import com.ricdip.interpreters.diceroller.token.Token;
@@ -77,14 +78,14 @@ public class Parser {
     }
 
     /**
-     * Parses the input stream and returns a {@link RootASTNode} that identifies the root node of the AST that can be
+     * Parses the input stream and returns a {@link Result} that identifies the root node of the AST that can be
      * traversed by an {@link Evaluator} instance.
      *
-     * @return A {@link RootASTNode} that contains the AST or {@code null} if some error occurs.
+     * @return A {@link Result} that contains the AST or {@code null} if some error occurs.
      */
-    public RootASTNode parse() {
+    public Result parse() {
         // create an empty root node
-        RootASTNode root = new RootASTNode();
+        Result root = new Result();
 
         // begin parsing expressions
         root.setExpression(parseExpression(Precedence.LOWEST));
@@ -155,7 +156,7 @@ public class Parser {
 
     private Expression parseRollExpression(Expression left) {
         // left must be a dice literal
-        if (!TokenType.DICE.equals(left.getTokenType())) {
+        if (!(left instanceof DiceLiteral)) {
             errors.add(String.format("expected dice literal, got '%s'", left));
             return null;
         }
@@ -215,7 +216,6 @@ public class Parser {
     }
 
     private Expression parsePrefixExpression() {
-        TokenType currTokenType = currToken.getTokenType();
         Operator operator = Operator.valueOf(currToken.getTokenType().name());
 
         nextToken();
@@ -223,14 +223,12 @@ public class Parser {
         Expression right = parseExpression(Precedence.PREFIX);
 
         return new PrefixExpression(
-                currTokenType,
                 operator,
                 right
         );
     }
 
     private Expression parseInfixExpression(Expression left) {
-        TokenType currTokenType = currToken.getTokenType();
         Operator operator = Operator.valueOf(currToken.getTokenType().name());
         Precedence precedence = getOperatorPrecedence(operator);
 
@@ -239,7 +237,6 @@ public class Parser {
         Expression right = parseExpression(precedence);
 
         return new InfixExpression(
-                currTokenType,
                 operator,
                 left,
                 right

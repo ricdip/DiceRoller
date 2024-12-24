@@ -1,7 +1,7 @@
-package com.ricdip.interpreters.diceroller.ast;
+package com.ricdip.interpreters.diceroller.parser.ast.impl;
 
+import com.ricdip.interpreters.diceroller.parser.ast.Expression;
 import com.ricdip.interpreters.diceroller.symbol.DiceType;
-import com.ricdip.interpreters.diceroller.token.TokenType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,11 +14,6 @@ import lombok.RequiredArgsConstructor;
 public class DiceLiteral implements Expression {
     private final Integer numberOfDices;
     private final DiceType diceType;
-
-    @Override
-    public TokenType getTokenType() {
-        return TokenType.DICE;
-    }
 
     @Override
     public String toString() {

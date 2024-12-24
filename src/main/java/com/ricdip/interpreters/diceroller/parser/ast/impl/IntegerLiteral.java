@@ -1,6 +1,6 @@
-package com.ricdip.interpreters.diceroller.ast;
+package com.ricdip.interpreters.diceroller.parser.ast.impl;
 
-import com.ricdip.interpreters.diceroller.token.TokenType;
+import com.ricdip.interpreters.diceroller.parser.ast.Expression;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,11 +12,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class IntegerLiteral implements Expression {
     private final Integer value;
-
-    @Override
-    public TokenType getTokenType() {
-        return TokenType.INT;
-    }
 
     @Override
     public String toString() {

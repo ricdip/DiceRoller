@@ -14,6 +14,6 @@ public class Token {
 
     @Override
     public String toString() {
-        return String.format("Token {type: '%s', lexeme: '%s'}", tokenType, lexeme);
+        return String.format("(%s, '%s')", tokenType, lexeme);
     }
 }

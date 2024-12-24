@@ -1,8 +1,8 @@
-package com.ricdip.interpreters.diceroller.repl;
+package com.ricdip.interpreters.diceroller.parser;
 
-import com.ricdip.interpreters.diceroller.ast.RootASTNode;
+import com.ricdip.interpreters.diceroller.Constants;
 import com.ricdip.interpreters.diceroller.lexer.Lexer;
-import com.ricdip.interpreters.diceroller.parser.Parser;
+import com.ricdip.interpreters.diceroller.parser.ast.impl.Result;
 import com.ricdip.interpreters.diceroller.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,7 +39,7 @@ public class RPPL {
             Parser parser = new Parser(lexer);
 
             // parse input
-            RootASTNode parsed = parser.parse();
+            Result parsed = parser.parse();
 
             // if errors: print them and go to next iteration
             if (!parser.getErrors().isEmpty()) {

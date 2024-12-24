@@ -1,6 +1,6 @@
-package com.ricdip.interpreters.diceroller.repl;
+package com.ricdip.interpreters.diceroller.lexer;
 
-import com.ricdip.interpreters.diceroller.lexer.Lexer;
+import com.ricdip.interpreters.diceroller.Constants;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.InputStream;

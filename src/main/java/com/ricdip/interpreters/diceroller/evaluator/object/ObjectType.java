@@ -1,4 +1,4 @@
-package com.ricdip.interpreters.diceroller.object;
+package com.ricdip.interpreters.diceroller.evaluator.object;
 
 /**
  * Enum that contains all possible evaluated object types.

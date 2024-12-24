@@ -1,10 +1,10 @@
-package com.ricdip.interpreters.diceroller.repl;
+package com.ricdip.interpreters.diceroller.evaluator;
 
-import com.ricdip.interpreters.diceroller.ast.RootASTNode;
-import com.ricdip.interpreters.diceroller.evaluator.Evaluator;
+import com.ricdip.interpreters.diceroller.Constants;
+import com.ricdip.interpreters.diceroller.evaluator.object.EvaluatedObject;
 import com.ricdip.interpreters.diceroller.lexer.Lexer;
-import com.ricdip.interpreters.diceroller.object.EvaluatedObject;
 import com.ricdip.interpreters.diceroller.parser.Parser;
+import com.ricdip.interpreters.diceroller.parser.ast.impl.Result;
 import com.ricdip.interpreters.diceroller.random.DiceRoller;
 import com.ricdip.interpreters.diceroller.utils.Utils;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class REPL {
             Parser parser = new Parser(lexer);
 
             // parse input
-            RootASTNode parsed = parser.parse();
+            Result parsed = parser.parse();
 
             // if errors: print them and go to next iteration
             if (!parser.getErrors().isEmpty()) {

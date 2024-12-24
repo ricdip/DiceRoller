@@ -1,4 +1,4 @@
-package com.ricdip.interpreters.diceroller.repl;
+package com.ricdip.interpreters.diceroller;
 
 /**
  * Class that contains some used common constants between REPL classes.

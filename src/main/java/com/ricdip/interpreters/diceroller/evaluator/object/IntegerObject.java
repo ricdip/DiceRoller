@@ -1,4 +1,4 @@
-package com.ricdip.interpreters.diceroller.object;
+package com.ricdip.interpreters.diceroller.evaluator.object;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

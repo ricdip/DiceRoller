@@ -1,6 +1,6 @@
-package com.ricdip.interpreters.diceroller.ast;
+package com.ricdip.interpreters.diceroller.parser.ast.impl;
 
-import com.ricdip.interpreters.diceroller.token.TokenType;
+import com.ricdip.interpreters.diceroller.parser.ast.Expression;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,11 +14,6 @@ import lombok.RequiredArgsConstructor;
 public class RollExpression implements Expression {
     private final DiceLiteral dice;
     private final Expression expression;
-
-    @Override
-    public TokenType getTokenType() {
-        return TokenType.LSQUARE;
-    }
 
     @Override
     public String toString() {

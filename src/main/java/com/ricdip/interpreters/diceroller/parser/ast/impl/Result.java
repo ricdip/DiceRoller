@@ -1,5 +1,7 @@
-package com.ricdip.interpreters.diceroller.ast;
+package com.ricdip.interpreters.diceroller.parser.ast.impl;
 
+import com.ricdip.interpreters.diceroller.parser.ast.Expression;
+import com.ricdip.interpreters.diceroller.parser.ast.Node;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RootASTNode implements ASTNode {
+public class Result implements Node {
     private Expression expression;
 
     @Override
     public String toString() {
-        return String.format("%s", expression.toString());
+        return expression.toString();
     }
 }

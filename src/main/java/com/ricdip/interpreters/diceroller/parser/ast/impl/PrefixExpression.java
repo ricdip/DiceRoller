@@ -1,7 +1,7 @@
-package com.ricdip.interpreters.diceroller.ast;
+package com.ricdip.interpreters.diceroller.parser.ast.impl;
 
 import com.ricdip.interpreters.diceroller.parser.Operator;
-import com.ricdip.interpreters.diceroller.token.TokenType;
+import com.ricdip.interpreters.diceroller.parser.ast.Expression;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class PrefixExpression implements Expression {
-    private final TokenType tokenType;
     private final Operator operator;
     private final Expression right;
 
