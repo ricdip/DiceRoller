@@ -2,6 +2,7 @@ package com.ricdip.interpreters.diceroller.parser.ast.impl;
 
 import com.ricdip.interpreters.diceroller.parser.Operator;
 import com.ricdip.interpreters.diceroller.parser.ast.Expression;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class InfixExpression implements Expression {
     private final Operator operator;
     private final Expression left;

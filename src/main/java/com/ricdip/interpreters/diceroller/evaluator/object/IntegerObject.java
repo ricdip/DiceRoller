@@ -1,6 +1,7 @@
 package com.ricdip.interpreters.diceroller.evaluator.object;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class IntegerObject implements EvaluatedObject {
     private final Integer value;
 

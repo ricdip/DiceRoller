@@ -1,6 +1,7 @@
 package com.ricdip.interpreters.diceroller.evaluator.object;
 
 import com.ricdip.interpreters.diceroller.symbol.DiceType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class SeparatedDiceRollObject implements EvaluatedObject {
     private final Integer numberOfDices;
     private final DiceType diceType;

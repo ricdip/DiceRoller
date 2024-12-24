@@ -4,6 +4,7 @@ import com.ricdip.interpreters.diceroller.parser.ast.Expression;
 import com.ricdip.interpreters.diceroller.parser.ast.Node;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Result implements Node {
     private Expression expression;
 

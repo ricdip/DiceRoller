@@ -1,11 +1,13 @@
 package com.ricdip.interpreters.diceroller.evaluator.object;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
  * Class that contains an error occurred while evaluating.
  */
 @Getter
+@EqualsAndHashCode
 public class ErrorObject implements EvaluatedObject {
     private final String message;
 

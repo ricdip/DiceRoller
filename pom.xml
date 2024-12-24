@@ -16,6 +16,7 @@
         <lombok.version>1.18.32</lombok.version>
         <picocli.version>4.7.6</picocli.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
+        <junit-jupiter-api.version>5.11.3</junit-jupiter-api.version>
         <!-- plugins versions -->
         <spring-boot-maven-plugin.version>3.3.0</spring-boot-maven-plugin.version>
     </properties>
@@ -36,6 +37,18 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter-api.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit-jupiter-api.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

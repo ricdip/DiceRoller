@@ -1,5 +1,6 @@
 package com.ricdip.interpreters.diceroller.token;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class Token {
     private final TokenType tokenType;
     private final String lexeme;
