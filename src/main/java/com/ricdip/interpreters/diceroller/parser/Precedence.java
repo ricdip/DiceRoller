@@ -6,8 +6,8 @@ package com.ricdip.interpreters.diceroller.parser;
  */
 public enum Precedence {
     LOWEST,
-    SUM, // + or -
-    PRODUCT, // * or /
+    SUMMATION, // + or -
+    MULTIPLICATION, // * or /
     PREFIX, // -2
     SEPARATED_DICE_ROLL // 2d4[2]
 }

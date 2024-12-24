@@ -59,10 +59,10 @@ public class Parser {
         infixParseFunctions.put(TokenType.LSQUARE, this::parseRollExpression); // left[right] (left is a dice, right is an expression to sum to each dice roll)
 
         // associate a specific operator to a precedence (higher number = higher precedence)
-        operatorPrecedences.put(Operator.PLUS, Precedence.SUM);
-        operatorPrecedences.put(Operator.MINUS, Precedence.SUM);
-        operatorPrecedences.put(Operator.ASTERISK, Precedence.PRODUCT);
-        operatorPrecedences.put(Operator.SLASH, Precedence.PRODUCT);
+        operatorPrecedences.put(Operator.PLUS, Precedence.SUMMATION);
+        operatorPrecedences.put(Operator.MINUS, Precedence.SUMMATION);
+        operatorPrecedences.put(Operator.ASTERISK, Precedence.MULTIPLICATION);
+        operatorPrecedences.put(Operator.SLASH, Precedence.MULTIPLICATION);
         operatorPrecedences.put(Operator.LSQUARE, Precedence.SEPARATED_DICE_ROLL);
     }
 
