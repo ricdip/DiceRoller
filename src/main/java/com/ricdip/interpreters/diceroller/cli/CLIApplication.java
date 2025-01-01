@@ -14,7 +14,7 @@ import java.io.PrintWriter;
         name = "<jar file name>",
         versionProvider = BuildInfoVersionProvider.class,
         mixinStandardHelpOptions = true,
-        description = "A D&D dice roller written in Java"
+        description = "A D&D dice roller written in Java."
 )
 public class CLIApplication implements Runnable {
     @ArgGroup

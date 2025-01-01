@@ -113,12 +113,12 @@ The implementation used for the RNG is [SecureRandom](https://docs.oracle.com/en
 
 ```
 Usage: <jar file name> [-hV] [-ml | -mp | -me]
-A D&D dice roller written in Java
+A D&D dice roller written in Java.
   -h, --help               Show this help message and exit.
       -me, --mode-evaluator
-                           Enable evaluator mode [default]
-      -ml, --mode-lexer    Enable lexer mode
-      -mp, --mode-parser   Enable parser mode
+                           Enable evaluator mode [default].
+      -ml, --mode-lexer    Enable lexer mode.
+      -mp, --mode-parser   Enable parser mode.
   -V, --version            Print version information and exit.
 ```
 
@@ -159,7 +159,7 @@ user@host:~$ mvn package
 user@host:~$ java -jar DiceRoller-1.0.1.jar
 ```
 
-To exit the program type **q** or use the **Ctrl+C**.
+To exit the program type **q**, type an empty line, or use the **Ctrl+C**.
 
 ## References
 The really useful book [Writing an Interpreter in Go](https://interpreterbook.com/) written by Thorsten Ball.
